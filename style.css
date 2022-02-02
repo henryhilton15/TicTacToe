@@ -1,0 +1,19 @@
+#draw_board {
+    width: 500px;
+    height: 500px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+}
+
+div[id*='row']{
+    flex: 1;
+    display: flex;
+}
+
+div[id*='cell']{
+    flex: 1;
+    background-color: white;
+    margin: 0.5px;
+}
