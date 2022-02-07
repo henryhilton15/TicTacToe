@@ -1,48 +1,84 @@
+const createPlayer = (symbol) => {
+    return {symbol};
+};
+
 const Game = (() => {
-    var board = Array.apply(null, Array(9)).map(function () {});
-    var winner;
-    var draw = function(){
-        
+    const player_X = createPlayer("X");
+    const player_O = createPlayer("O");
+    
+    let gameOver = false;
+
+    let turn = player_X;
+    const label = document.getElementById('label');
+    function nextTurn() {
+        if (!Game.gameOver){
+            if (this.turn == player_X) this.turn = player_O;
+            else this.turn = player_X;
+            label.textContent = `${this.turn.symbol}'s Turn`
+        }
     };
+
+    function checkWin() {
+        const label = document.getElementById('label');
+
+        const winningLines = [ 
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6],
+        ];
+
+        winningLines.forEach((line) => {
+            if (gameBoard.board[line[0]] === this.turn.symbol && gameBoard.board[line[1]] === this.turn.symbol && gameBoard.board[line[2]] === this.turn.symbol) {
+                label.textContent = `${this.turn.symbol} is the winner!!`
+                this.gameOver = true;
+            }
+        })
+        
+        if (!gameOver && !gameBoard.board.includes('')) label.textContent = "It's a Tie!";
+    };
+
     return {
-        board,
-        winner,
-        draw
+        turn,
+        nextTurn,
+        checkWin,
+        gameOver,
     }
   })();
 
-const createPlayer = (symbol, turn) => {
-    const endTurn = () => turn = !turn;
-    return { symbol, turn, endTurn};
-};
+const gameBoard = (() => {
 
-const P1 = createPlayer("X", true);
-const P2 = createPlayer("O", false);
+    let board = [];
+    for (let i = 0; i < 9; i++) {
+       board.push(''); 
+    }
 
-Game.board = ['X','X', 'X', 'O', 'O', 'O', 'X','X', 'X'];
-Game.draw();
+    let cells = document.querySelector('.cells');
 
+    board.forEach((item, index) => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cells.appendChild(cell);
+        cell.addEventListener('click', ()=> {
+            if (!Game.gameOver){
+                const symbol = Game.turn.symbol;
+                const mark = document.createElement('h1');
+                mark.textContent = symbol
+                cell.appendChild(mark);
+                board[index] = symbol
+                Game.checkWin();
+                Game.nextTurn();
+                cell.style.pointerEvents = 'none';
+            }
+        })
+    })
 
+    return{
+        board
+    };
+})();
 
-
-
-
-        // draw_board.innerHTML = '';
-        // const draw_board = document.querySelector('#draw_board');
-        // const row1 = document.createElement('div');
-        // const row2 = document.createElement('div');
-        // const row3 = document.createElement('div');
-        // draw_board.appendChild(row1, row2, row3);
-        // for (let i = 1; i <= 9; i++) {
-        //     const square = document.createElement('div');
-        //     square.id = `square_${i}`;
-        //     if (Math.ceil(i/3) = 1){
-        //         row1.appendChild(square);
-        //     }
-        //     else if (Math.ceil(i/3) = 2){
-        //         row2.appendChild(square);
-        //     }
-        //     else if (Math.ceil(i/3) = 3){
-        //         row3.appendChild(square);
-        //     }
-        // }

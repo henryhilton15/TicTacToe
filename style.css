@@ -1,19 +1,32 @@
-#draw_board {
+.gameboard {
     width: 500px;
-    height: 500px;
+    height: 470px;
+    background-color: purple;
+    padding: 5px;
+}
+
+.cells{
+    padding: 5px;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
     background-color: black;
-    display: flex;
-    flex-direction: column;
-    padding: 2px;
 }
 
-div[id*='row']{
-    flex: 1;
-    display: flex;
-}
-
-div[id*='cell']{
-    flex: 1;
+.cell{
     background-color: white;
-    margin: 0.5px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    font-size: 100px;
+}
+
+p{
+    margin-left: 50px;
+    font-size: 50px;
 }
